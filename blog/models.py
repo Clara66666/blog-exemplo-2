@@ -19,7 +19,7 @@ class Blog(models.Model):
         nome = models.CharField(max_length=100)
         subnome =  models.CharField(max_length=100, blank= True)
         descricao = models.TextField(max_length=2000)
-        capa = models.ImageField()
+        capa = models.ImageField(blank=True)
         instagram = models.URLField(blank= True)
         facebook = models.URLField(blank= True)
         github = models.URLField(blank= True)
@@ -34,6 +34,7 @@ class Mensagem(models.Model):
     email = models.EmailField()
     telefone = models.CharField(max_length=12)
     Mensagem = models.TextField(max_length=1000)
+    cidade = models.CharField(max_length=100 , blank= True)
     lida = models.BooleanField(default= False)
 
     def __str__(self):

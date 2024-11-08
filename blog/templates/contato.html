@@ -15,26 +15,33 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p>Quer entrar em contato? envie-me uma Mensagem!</p>
                         <div class="my-5">
-                        <forms id = "contactForm"
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="contactForm" method="POST">
+                                {%  csrf_token %}
                                 <div class="form-floating">
-                                    <input class="form-control" id="name" name= "nome" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                    <input class="form-control {% if 'erro' %}is-invalid{% endif %}"  id="name" name= "nome" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                     <label for="name">Nome</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">O nome é obrigatório.</div>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="email" name ="email" type="email" placeholder="Digite seu email..." data-sb-validations="required,email" />
+                                    <input class="form-control {% if 'erro' %}is-invalid{% endif %}" id="email" name ="email" type="email" placeholder="Digite seu email..." data-sb-validations="required,email" />
                                     <label for="email">Email </label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    <div class="invalid-feedback" data-sb-feedback="email:required">O email é obrigatório.</div>
+                                    <div class="invalid-feedback" data-sb-feedback="email:email"></div>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="phone" name= "telefone" type="tel" placeholder="Enter your phone number..." data-sb-validations="required" />
-                                    <label for="phone">numero de telefone</label>
-                                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                    <input class="form-control {% if 'erro' %}is-invalid{% endif %}" id="phone" name= "telefone" type="tel" placeholder="Enter your phone number..." data-sb-validations="required" />
+                                    <label for="phone">número de telefone</label>
+                                    <div class="invalid-feedback" data-sb-feedback="phone:required">O número de telefone é obrigatório.</div>
                                 </div>
+
                                 <div class="form-floating">
-                                    <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                                    <input class="form-control" id="cidade" name= "cidade" type="cidade" placeholder="Enter your cid..." data-sb-validations="required" />
+                                    <label for="name">Cidade</label>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">A cid is required.          
+                                </div>
+
+                                <div class="form-floating">
+                                    <textarea class="form-control {% if 'erro' %}is-invalid{% endif %}" id="mensagem" name="mensagem" type="mensagem" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
                                     <label for="message">Mensagem</label>
                                     <div class="invalid-feedback" data-sb-feedback="message:required">Digite a sua mensagem aqui.</div>
                                 </div>
@@ -57,7 +64,7 @@
                                 <!-- an error submitting the form-->
                                 <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                                 <!-- Submit Button-->
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Send</button>
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Enviar</button>
                             </form>
                         </div>
                     </div>
@@ -66,5 +73,5 @@
         </main>
         <!-- Footer-->
         
-{% endblock%}
+{% endblock content %}
         
