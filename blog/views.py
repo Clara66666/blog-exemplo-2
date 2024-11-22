@@ -26,13 +26,9 @@ def sobre(request):
 
 def contato(request):
    context = {
-         "blog": Blog.objects.first() },
+         "blog": Blog.objects.first(),
+           }
 
-def mensagens(request):
-   context = {
-         "blog": Blog.objects.first()
-
-}
 
    if  request.method == "POST":
       print(request.POST['nome'])
@@ -52,14 +48,16 @@ def mensagens(request):
       if not request.POST['mensagem']:
         context['erro']['mensagem'] = True
       if  context["erro"]:
-        return render(request, "contact.html" , context)
+        return render(request, "edit_contato.html" , context)
 
-      mensagem = Mensagem(nome = request.POST['nome'],
-                         email = request.POST['email'],
-                         telefone = request.POST['telefone'],
-                         mensagem = request.POST['mensagem'],
-                         cidade = request.POST['cidade'])
-      
+      mensagem = context["mensagem"]
+      mensagem.nome = request.POST['nome']
+      mensagem.email = request.POST['email']
+      mensagem.telefone = request.POST['telefone']
+      mensagem.cidade = request.POST['cidade']
+      mensagem.mensagem = request.POST['mensagem']                                     
+
+   
       mensagem.save()
 
       return render(request, 'contato.html', context) 
@@ -67,8 +65,28 @@ def mensagens(request):
    else: 
       return render(request, 'contato.html', context)
    
+def mensagens(request):
+   context = {
+         "blog": Blog.objects.first(),
+
+}
+   return render(request, 'mensagens.html', context) 
 
 
+def editar_mensagens(request):
+   context = {
+      "blog": Blog.objects.first(),
+      "mensagens" : Mensagem.objects.get(pk=mensagens_id)
+   }
+
+   return render(request, 'mensagens.html', context) 
 
 
+  if request.method=="POST":
+     context["mensagem"].delete()
+     return redirect('mensagem')
+ else:
+   return render(request, "delete_contato.html", context)
 
+
+                                                                                             
