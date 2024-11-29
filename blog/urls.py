@@ -12,3 +12,7 @@ urlpatterns = [
          views.editar_mensagens, 
          name= 'editar_mensagens')
     ]
+path('mensagens/<int:mensagem_id>/deletar/',
+         views.deletar_mensagem,
+         name='deletar_mensagem'
+        ),

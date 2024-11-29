@@ -1,77 +1,36 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block content %}
-
-        
-        <!-- Navigation-->
-       
-        <!-- Page Header-->
-        
-        <!-- Main Content-->
-        <main class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>Quer entrar em contato? envie-me uma Mensagem!</p>
-                        <div class="my-5">
-                        <form id="contactForm" method="POST">
-                                {%  csrf_token %}
-                                <div class="form-floating">
-                                    <input class="form-control {% if erro.nome %}is-invalid{% endif %}"  id="name" name= "nome" type="text" placeholder="Enter your name..."   value= "{{mensagens.nome}}"  data-sb-validations="required" />
-                                    <label for="name">Nome</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">O nome é obrigatório.</div>
-                                </div>
-                                <div class="form-floating">
-                                    <input class="form-control {% if erro.email %}is-invalid{% endif %}" id="email" name ="email" type="email" placeholder="Digite seu email..."  value= "{{mensagens.email}}"    data-sb-validations="required,email" />
-                                    <label for="email">Email </label>                                                                                                        
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">O email é obrigatório.</div>                                              
-                                    <div class="invalid-feedback" data-sb-feedback="email:email"></div>
-                                </div>
-                                <div class="form-floating">
-                                    <input class="form-control {% if erro.telefone %}is-invalid{% endif %}" id="phone" name= "telefone" type="tel" placeholder="Enter your phone number..."    value= "{{mensagens.telefone}}"        data-sb-validations="required" />
-                                    <label for="phone">número de telefone</label>
-                                    <div class="invalid-feedback" data-sb-feedback="phone:required">O número de telefone é obrigatório.</div>
-                                </div>
-
-                                <div class="form-floating">
-                                    <input class="form-control" id="cidade" name= "cidade" type="cidade" placeholder="Enter your cid..."    value= "{{mensagens.cidade}}"      data-sb-validations="required" />
-                                    <label for="name">Cidade</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A cid is required.          
-                                </div>
-
-                                <div class="form-floating">
-                                    <textarea class="form-control {% if erro.mensagem %}is-invalid{% endif %}" id="mensagem" name="mensagem" type="mensagem" placeholder="Enter your message here..." style="height: 12rem"   value= "{{mensagens.mensagens}}"      data-sb-validations="required"></textarea>
-                                    <label for="message">Mensagem</label>
-                                    <div class="invalid-feedback" data-sb-feedback="message:required">Digite a sua mensagem aqui.</div>
-                                </div>
-                                <br />
-                                <!-- Submit success message-->
-                                <!---->
-                                <!-- This is what your users will see when the form-->
-                                <!-- has successfully submitted-->
-                                <div class="d-none" id="submitSuccessMessage">
-                                    <div class="text-center mb-3">
-                                        <div class="fw-bolder">Form submission successful!</div>
-                                        To activate this form, sign up at
-                                        <br />
-                                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                    </div>
-                                </div>
-                                <!-- Submit error message-->
-                                <!---->
-                                <!-- This is what your users will see when there is-->
-                                <!-- an error submitting the form-->
-                                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                                <!-- Submit Button-->
-                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Enviar</button>
-                            </form>
-                        </div>
-                    </div>
+{% block header %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Apagar Contato</h1>
                 </div>
             </div>
-        </main>
-        <!-- Footer-->
-        
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+{% block content %}
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="my-5">
+                    <h3>Tem certeza?</h3>
+                    <form id="contactForm" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-danger text-uppercase" id="submitButton" type="submit">Sim</button>
+                        <a class="btn btn-secondary text-uppercase" href="{% url 'mensagens' %}">Não</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock content %}
-        

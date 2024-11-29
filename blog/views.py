@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from .models import Post, Blog, Mensagem
+from django.shortcuts import render, redirect, get_object_or_404
+from django.forms.models import model_to_dict
+from .models import Post, Blog, Mensagem 
+from .forms import Mensagemform
+
 
 def index(request):
     context = {
@@ -27,6 +30,8 @@ def sobre(request):
 def contato(request):
    context = {
          "blog": Blog.objects.first(),
+     
+        
            }
 
 
@@ -38,33 +43,19 @@ def contato(request):
       print(request.POST['cidade'])
 
       
-      context['erro'] = []
-      if not request.POST['nome']:
-        context['erro']['nome'] = True
-      if not request.POST['email']:
-        context['erro']['email'] = True
-      if not request.POST['telefone']:
-        context['erro']['telefone'] = True
-      if not request.POST['mensagem']:
-        context['erro']['mensagem'] = True
-      if  context["erro"]:
-        return render(request, "edit_contato.html" , context)
+    
+   if request.method == "POST":
+    form = Mensagemform(request.POST)
+    if form.is_valid():
+          mensagem.nome = form.cleaned_data['nome']
+          mensagem.email = form.cleaned_data['email']
+          mensagem.telefone = form.cleaned_data['telefone']
+          mensagem = form.cleaned_data['mensagem']
+          mensagem.cidade = form.cleaned_data['cidade']
+          mensagem.save()
+    return redirect(mensagem) 
+   return render(request, "contact.html", context)
 
-      mensagem = context["mensagem"]
-      mensagem.nome = request.POST['nome']
-      mensagem.email = request.POST['email']
-      mensagem.telefone = request.POST['telefone']
-      mensagem.cidade = request.POST['cidade']
-      mensagem.mensagem = request.POST['mensagem']                                     
-
-   
-      mensagem.save()
-
-      return render(request, 'contato.html', context) 
-
-   else: 
-      return render(request, 'contato.html', context)
-   
 def mensagens(request):
    context = {
          "blog": Blog.objects.first(),
@@ -73,20 +64,25 @@ def mensagens(request):
    return render(request, 'mensagens.html', context) 
 
 
-def editar_mensagens(request):
+def editar_mensagens(request, mensagem_id):
+   mensagem = get_object_or_404(Mensagem, pk=mensagem_id)
    context = {
       "blog": Blog.objects.first(),
-      "mensagens" : Mensagem.objects.get(pk=mensagens_id)
+      "form": Mensagemform(initial=model_to_dict(mensagem))
    }
 
    return render(request, 'mensagens.html', context) 
 
 
-  if request.method=="POST":
-     context["mensagem"].delete()
-     return redirect('mensagem')
- else:
-   return render(request, "delete_contato.html", context)
+def deletar_mensagem(request, mensagem_id):
+    context = {
+        "blog": Blog.objects.first(),
+        "mensagem": get_object_or_404(Mensagem, pk=mensagem_id)
+    }
 
-
+    if request.method=="POST":
+        context["mensagem"].delete()
+        return redirect('mensagens')
+    else:
+        return render(request, "delete_contact.html", context)
                                                                                              
