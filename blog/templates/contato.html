@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static crispy_forms_tags %}
 {% block header %}
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
@@ -26,7 +26,7 @@
                 <div class="my-5">                   
                     <form id="contactForm" method="POST">
                         {% csrf_token %}
-                        {{ form }}
+                        {{ form crispy }}
                         {% for field in form %}   
                         <div class= "form-floating"
                         {{ field.errors }}

@@ -33,7 +33,7 @@ class Mensagem(models.Model):
     nome = models.CharField(max_length=180)
     email = models.EmailField()
     telefone = models.CharField(max_length=12)
-    Mensagem = models.TextField(max_length=1000)
+    mensagem = models.TextField(max_length=1000)
     cidade = models.CharField(max_length=100 , blank= True)
     lida = models.BooleanField(default= False)
 

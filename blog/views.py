@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.models import model_to_dict
-from .models import Post, Blog, Mensagem 
-from .forms import Mensagemform
-
+from .models import Post, Blog, Mensagem
+from .forms import MensagemForm
 
 def index(request):
     context = {
@@ -33,9 +32,15 @@ def contato(request):
      
         
            }
+   return render(request, 'cadastro.html', context)
 
+def cadastro(request):
+    context = {
+         "blog": Blog.objects.first(),
+}
+    return render(request, 'cadastro.html', context)
 
-   if  request.method == "POST":
+if  request.method == "POST":
       print(request.POST['nome'])
       print(request.POST['email'])
       print(request.POST['telefone'])
@@ -44,7 +49,7 @@ def contato(request):
 
       
     
-   if request.method == "POST":
+if request.method == "POST":
     form = Mensagemform(request.POST)
     if form.is_valid():
           mensagem.nome = form.cleaned_data['nome']
@@ -53,8 +58,8 @@ def contato(request):
           mensagem = form.cleaned_data['mensagem']
           mensagem.cidade = form.cleaned_data['cidade']
           mensagem.save()
-    return redirect(mensagem) 
-   return render(request, "contact.html", context)
+return redirect(mensagem) 
+return render(request, "contact.html", context)
 
 def mensagens(request):
    context = {
